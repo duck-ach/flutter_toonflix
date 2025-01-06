@@ -10,7 +10,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  static const twentyFimeMinutes = 1500;
+  static const twentyFimeMinutes = 10;
   // pomodoros count
   int totalPomodoros = 0;
   // total 시간
@@ -48,10 +48,20 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  // pause 버튼 눌렀을 때
   void onPausePressed() {
     timer.cancel();
     setState(() {
       isRunning = false;
+    });
+  }
+
+  // restart 버튼 눌렀을 때
+  void onRestartPressed() {
+    timer.cancel();
+    setState(() {
+      isRunning = false;
+      totalSeconds = twentyFimeMinutes;
     });
   }
 
@@ -83,17 +93,51 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Flexible(
             flex: 2,
-            child: Center(
-              child: IconButton(
-                onPressed: isRunning ? onPausePressed : onStartPressed,
-                icon: Icon(
-                  isRunning
-                      ? Icons.pause_circle_outline
-                      : Icons.play_circle_outline,
-                  size: 100,
-                  color: Theme.of(context).cardColor,
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 100,
                 ),
-              ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            onPressed:
+                                isRunning ? onPausePressed : onStartPressed,
+                            icon: Icon(
+                              isRunning
+                                  ? Icons.pause_circle_outline
+                                  : Icons.play_circle_outline,
+                              size: 100,
+                              color: Theme.of(context).cardColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 150,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    IconButton(
+                      onPressed: onRestartPressed,
+                      icon: Icon(
+                        Icons.restart_alt_outlined,
+                        size: 50,
+                        color: Theme.of(context).cardColor,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
           Flexible(
