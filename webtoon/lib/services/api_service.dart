@@ -7,7 +7,9 @@ class ApiService {
   final String baseUrl = "https://webtoon-crawler.nomadcoders.workers.dev";
   final String today = "today";
 
-  void getTodaysToons() async {
+  Future<List<WebtoonModel>> getTodaysToons() async {
+    List<WebtoonModel> webtoonInstance = [];
+
     // http.dart의 라이브러리 메소드
     // 어떤 요청에 get 요청을 보냄
     final url = Uri.parse('$baseUrl/$today');
@@ -22,9 +24,11 @@ class ApiService {
     if (response.statusCode == 200) {
       final List<dynamic> webtoons = jsonDecode(response.body);
       for (var webtoon in webtoons) {
-        WebtoonModel.fromJson(webtoon);
+        final instance = WebtoonModel.fromJson(webtoon);
+        webtoonInstance.add(instance);
       }
-      return;
+      
+      return webtoonInstance;
     }
     throw Error();
   }
