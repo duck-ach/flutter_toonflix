@@ -28,14 +28,17 @@ class HomeScreen extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             // list를 보여주는 위젯 (최적화는 되어있지 않아서 한번에 보여줌)
-            return ListView.builder(
-              scrollDirection: Axis.vertical,
+            return ListView.separated(
+              scrollDirection: Axis.horizontal,
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 print(index);
                 var webtoon = snapshot.data![index];
                 return Text(webtoon.title);
               },
+              separatorBuilder: (context, index) => const SizedBox(
+                width: 20,
+              ),
             );
           }
           // Loading
