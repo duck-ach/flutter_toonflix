@@ -5,7 +5,7 @@ import 'package:webtoon/services/api_service.dart';
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
-  Future<List<WebtoonModel>> webtoons = ApiService.getTodaysToons();
+  final Future<List<WebtoonModel>> webtoons = ApiService.getTodaysToons();
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +27,21 @@ class HomeScreen extends StatelessWidget {
         future: webtoons,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return const Text("There is data !");
+            // list를 보여주는 위젯 (최적화는 되어있지 않아서 한번에 보여줌)
+            return ListView.builder(
+              scrollDirection: Axis.vertical,
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                print(index);
+                var webtoon = snapshot.data![index];
+                return Text(webtoon.title);
+              },
+            );
           }
-          return const Text("Loading...");
+          // Loading
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         },
       ),
     );
