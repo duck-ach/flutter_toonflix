@@ -4,11 +4,12 @@ import 'package:http/http.dart' as http;
 import 'package:webtoon/models/webtoon_model.dart';
 
 class ApiService {
-  final String baseUrl = "https://webtoon-crawler.nomadcoders.workers.dev";
-  final String today = "today";
+  static const String baseUrl =
+      "https://webtoon-crawler.nomadcoders.workers.dev";
+  static const String today = "today";
 
-  Future<List<WebtoonModel>> getTodaysToons() async {
-    List<WebtoonModel> webtoonInstance = [];
+  static Future<List<WebtoonModel>> getTodaysToons() async {
+    List<WebtoonModel> webtoonInstances = [];
 
     // http.dart의 라이브러리 메소드
     // 어떤 요청에 get 요청을 보냄
@@ -25,10 +26,10 @@ class ApiService {
       final List<dynamic> webtoons = jsonDecode(response.body);
       for (var webtoon in webtoons) {
         final instance = WebtoonModel.fromJson(webtoon);
-        webtoonInstance.add(instance);
+        webtoonInstances.add(instance);
       }
-      
-      return webtoonInstance;
+
+      return webtoonInstances;
     }
     throw Error();
   }
