@@ -96,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               children: [
                 const SizedBox(
-                  height: 100,
+                  height: 1$0,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -131,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       onPressed: onRestartPressed,
                       icon: Icon(
                         Icons.restart_alt_outlined,
-                        size: 50,
+                        size: 30,
                         color: Theme.of(context).cardColor,
                       ),
                     ),
